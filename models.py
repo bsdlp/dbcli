@@ -18,7 +18,8 @@ class Program(object):
         except:
             pass
 
-    def get_workouts(self):
+    def get_workouts(self, program_id):
+        payload = {'program_id': program_id}
         workouts = LeClient().request(path='workouts', params=payload)
         for workout in workouts:
             yield Workout([workout[i] for i in Workout.keys()])
