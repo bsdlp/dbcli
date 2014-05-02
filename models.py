@@ -1,4 +1,4 @@
-from .api import LeClient
+from api import LeClient
 
 
 class Program(object):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from prettytable import PrettyTable
-from .api import LeClient
-from .models import Workout, Program
+from api import LeClient
+from models import Workout, Program
 
 
 api = LeClient()
