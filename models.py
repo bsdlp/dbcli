@@ -7,6 +7,12 @@ class Program(object):
         self.title = title
         self.image_url = image_url
 
+
+class AProgram(Program):
+    def __init__(self, id=None, title=None, image_url=None, workout_ids=None):
+        Program.__init__(self, id, title, image_url)
+        self.workout_ids = workout_ids
+
     def get(self, **kwargs):
         programs = LeClient().request(path='programs')
         try:
@@ -44,3 +50,18 @@ class Workout(object):
             return workouts
         except:
             return False
+
+
+class AWorkout(Workout):
+    def __init__(self, id=None, title=None, trainer_name=None,
+                 workout_description=None, program_ids=None, image_url=None):
+        Workout.__init__(self, id, title, trainer_name, workout_description,
+                         program_ids, image_url)
+
+
+class Trainer(object):
+    def __init__(self, id=None, name=None, workout_ids=None, program_ids=None):
+        self.id = id
+        self.name = name
+        self.workout_ids = workout_ids
+        self.program_ids = program_ids
