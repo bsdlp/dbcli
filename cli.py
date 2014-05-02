@@ -6,27 +6,13 @@ import requests
 
 _ENDPOINT = 'http://dbios.herokuapp.com/'
 
+def _get_thing(thing_type):
+    r = requests.get(_ENDPOINT+thing_type)
+    return r.json()
 
-class Thing(object):
-    def __init__(self, **jawns):
-        self.__dict__.update(jawns)
-
-    def get_thing(self, thing_type):
-        r = requests.get(_ENDPOINT+thing_type)
-        things = r.json()
-        for thing in things:
-            yield self.__class__(**thing)
-
-    def tableify(self):
-        table = PrettyTable(self.__dict__.keys())
-        table.add_row(i.__dict__.values())
-
-
-thingerator = Thing()
-
-
-def list_thing(thing_type):
-    _table = PrettyTable(i.__dict__.keys())
-    for i in thingerator.get_thing(thing_type):
-        _table.add_row(i.__dict__.values())
-    print(_table)
+def list_programs():
+    table = PrettyTable(['id', 'title', 'image_url'])
+    for program in _get_thing('programs'):
+        table.add_row([program['id'], program['title'], program['image_url']])
+    table.align = 'l'
+    return print(table)
