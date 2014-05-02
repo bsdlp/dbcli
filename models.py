@@ -1,3 +1,6 @@
+from .api import LeClient
+
+
 class Program(object):
     def __init__(self, id=None, title=None, image_url=None):
         self.id = id
@@ -5,7 +8,7 @@ class Program(object):
         self.image_url = image_url
 
     def get(self, **kwargs):
-        programs = _get_thing('programs')
+        programs = LeClient().request(path='programs')
         try:
             program = next(filter(lambda x: x['id'] == kwargs['program_id'], programs))
             return self.__class__(**program)
@@ -16,9 +19,7 @@ class Program(object):
             pass
 
     def get_workouts(self):
-        payload = {'program_id': self.id}
-        r = requests.get(_ENDPOINT+'workouts', params=payload)
-        workouts = r.json()
+        workouts = LeClient().request(path='workouts', params=payload)
         for workout in workouts:
             yield Workout([workout[i] for i in Workout.keys()])
 
@@ -33,7 +34,7 @@ class Workout(object):
         self.image_url = image_url
 
     def get_workout(self, trainer_name):
-        workouts = _get_thing('workouts')
+        workouts = LeClient().request(path='workouts')
         try:
             workout = filter(lambda x: x['trainer_name'] == trainer_name,
                              workouts)
