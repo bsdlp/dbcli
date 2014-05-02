@@ -41,6 +41,14 @@ class Workout(object):
         self.program_ids = program_ids
         self.image_url = image_url
 
+    def get_workout(self, trainer_name):
+        try:
+            workout = filter(lambda x: x['trainer_name'] == trainer_name,
+                             workouts)
+            return workout
+        except:
+            return False
+
 
 def _get_thing(thing_type):
     r = requests.get(_ENDPOINT+thing_type)
