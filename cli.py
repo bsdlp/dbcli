@@ -8,7 +8,7 @@ _ENDPOINT = 'http://dbios.herokuapp.com/'
 
 
 class Program(object):
-    def __init__(self, id, title, image_url):
+    def __init__(self, id=None, title=None, image_url=None):
         self.id = id
         self.title = title
         self.image_url = image_url
@@ -33,8 +33,8 @@ class Program(object):
 
 
 class Workout(object):
-    def __init__(self, title, trainer_name, workout_description, program_ids,
-                 image_url):
+    def __init__(self, title=None, trainer_name=None,
+                 workout_description=None, program_ids=None, image_url=None):
         self.title = title
         self.trainer_name = trainer_name
         self.workout_description = workout_description
