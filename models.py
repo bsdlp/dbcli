@@ -10,10 +10,12 @@ class Program(object):
     def get(self, **kwargs):
         programs = LeClient().request(path='programs')
         try:
-            program = next(filter(lambda x: x['id'] == kwargs['program_id'], programs))
+            program = next(filter(lambda x: x['id'] == kwargs['program_id'],
+                                  programs))
             return self.__class__(**program)
         except KeyError:
-            program = next(filter(lambda x: x['title'] == kwargs['title'], programs))
+            program = next(filter(lambda x: x['title'] == kwargs['title'],
+                                  programs))
             return self.__class__(**program)
         except:
             pass
