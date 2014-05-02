@@ -7,7 +7,7 @@ from api import LeClient
 api = LeClient()
 
 
-def list_things(thing_type):
+def list_all(thing_type):
     if thing_type == 'programs':
         _jawns = ['id', 'title', 'image_url']
     elif thing_type == 'workouts':
