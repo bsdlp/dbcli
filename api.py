@@ -10,5 +10,5 @@ class LeClient(object):
         self.params = params
         result = None
 
-        r = requests.get(self.endpoint + path, params=params)
-        return r.json()
+        result = requests.get(self.endpoint + path, params=params)
+        return result.json()
