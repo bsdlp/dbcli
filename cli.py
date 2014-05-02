@@ -11,9 +11,8 @@ class Thing(object):
     def __init__(self, **jawns):
         self.__dict__.update(jawns)
 
-    def get_thing(self):
-        r = requests.get(_ENDPOINT+'programs')
+    def get_thing(self, thing_type):
+        r = requests.get(_ENDPOINT+thing_type)
         things = r.json()
         for thing in things:
             yield self.__class__(**thing)
-
