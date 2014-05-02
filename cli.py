@@ -21,6 +21,16 @@ class Program(object):
             yield Workout([workout[i] for i in Workout.keys()])
 
 
+class Workout(object):
+    def __init__(self, title, trainer_name, workout_description, program_ids,
+                 image_url):
+        self.title = title
+        self.trainer_name = trainer_name
+        self.workout_description = workout_description
+        self.program_ids = program_ids
+        self.image_url = image_url
+
+
 def _get_thing(thing_type):
     r = requests.get(_ENDPOINT+thing_type)
     return r.json()
