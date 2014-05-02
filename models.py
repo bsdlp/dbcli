@@ -55,13 +55,14 @@ class Workout(object):
 class AWorkout(Workout):
     def __init__(self, id=None, title=None, trainer_name=None,
                  workout_description=None, program_ids=None, image_url=None):
-        Workout.__init__(self, id, title, trainer_name, workout_description,
+        Workout.__init__(self, title, trainer_name, workout_description,
                          program_ids, image_url)
+        self.id = id(self)
 
 
 class Trainer(object):
     def __init__(self, id=None, name=None, workout_ids=None, program_ids=None):
-        self.id = id
+        self.id = id(self)
         self.name = name
         self.workout_ids = workout_ids
         self.program_ids = program_ids
