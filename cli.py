@@ -20,7 +20,7 @@ class Program(object):
         except AttributeError:
             program = next(filter(lambda x: x['title'] == kwargs['title'], programs))
         except:
-            return False
+            pass
         else:
             return self.__class__(**program)
 
