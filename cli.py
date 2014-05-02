@@ -17,12 +17,12 @@ class Program(object):
         programs = _get_thing('programs')
         try:
             program = next(filter(lambda x: x['id'] == kwargs['program_id'], programs))
-        except AttributeError:
+            return self.__class__(**program)
+        except KeyError:
             program = next(filter(lambda x: x['title'] == kwargs['title'], programs))
+            return self.__class__(**program)
         except:
             pass
-        else:
-            return self.__class__(**program)
 
     def get_workouts(self):
         payload = {'program_id': self.id}
