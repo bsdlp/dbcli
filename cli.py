@@ -16,9 +16,9 @@ class Program(object):
     def get(self, **kwargs):
         programs = _get_thing('programs')
         try:
-            program = next(filter(lambda x: x['id'] == kwargs.program_id, programs))
+            program = next(filter(lambda x: x['id'] == kwargs['program_id'], programs))
         except AttributeError:
-            program = next(filter(lambda x: x['title'] == kwargs.title, programs))
+            program = next(filter(lambda x: x['title'] == kwargs['title'], programs))
         except:
             return False
         else:
