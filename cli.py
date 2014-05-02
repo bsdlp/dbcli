@@ -10,20 +10,16 @@ def _get_thing(thing_type):
     r = requests.get(_ENDPOINT+thing_type)
     return r.json()
 
-def list_programs():
-    table = PrettyTable(['id', 'title', 'image_url'])
-    for program in _get_thing('programs'):
-        table.add_row([program['id'], program['title'], program['image_url']])
-    table.align = 'l'
-    return print(table)
+def list_things(thing_type):
+    if thing_type == 'programs':
+        _jawns = ['id', 'title', 'image_url']
+    elif thing_type == 'workouts':
+        _jawns = ['title', 'trainer_name', 'workout_description',
+                  'program_ids', 'image_url']
 
+    table = PrettyTable(_jawns)
+    for program in _get_thing(thing_type):
+        table.add_row([program[i] for i in _jawns])
 
-def list_workouts():
-    table = PrettyTable(['title', 'trainer_name', 'workout_description',
-                         'program_ids', 'image_url'])
-    for workout in _get_thing('workouts'):
-        table.add_row([workout['title'], workout['trainer_name'],
-                       workout['workout_description'], workout['program_ids'],
-                       workout['image_url']])
     table.align = 'l'
     return print(table)
