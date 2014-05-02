@@ -34,11 +34,11 @@ class Workout(object):
         self.program_ids = program_ids
         self.image_url = image_url
 
-    def get_workout(self, trainer_name):
-        workouts = LeClient().request(path='workouts')
+    def get_workouts(self, trainer_name):
+        data = LeClient().request(path='workouts')
         try:
-            workout = filter(lambda x: x['trainer_name'] == trainer_name,
-                             workouts)
-            return workout
+            workouts = filter(lambda x: x['trainer_name'] == trainer_name,
+                             data)
+            return workouts
         except:
             return False
