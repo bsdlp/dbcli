@@ -42,6 +42,7 @@ class Workout(object):
         self.image_url = image_url
 
     def get_workout(self, trainer_name):
+        workouts = _get_thing('workouts')
         try:
             workout = filter(lambda x: x['trainer_name'] == trainer_name,
                              workouts)
