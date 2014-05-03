@@ -12,18 +12,20 @@ _program_jawns = ['id', 'title', 'image_url']
 
 
 def list_all(thing_type):
+    """
+    :rtype:generator all workouts or programs.
+    """
     if thing_type == 'programs':
         _jawns = _program_jawns
     elif thing_type == 'workouts':
         _jawns = _workout_jawns
-    table = PrettyTable(_jawns)
     for item in api.request(path=thing_type):
-        table.add_row([item[i] for i in _jawns])
-
-    table.align = 'l'
-    return print(table)
+        yield item
 
 def list_program_workouts(program_id=None, program_title=None):
+    """
+    :rtype:filter workouts in program.
+    """
     _programs = api.request(path='programs')
     try:
         _program = next(filter(
@@ -35,10 +37,4 @@ def list_program_workouts(program_id=None, program_title=None):
     _workouts = api.request(path='workouts')
     _prog_workouts = filter(
         lambda x: _program['id'] in x['program_ids'], _workouts)
-
-    table = PrettyTable(_workout_jawns)
-    for workout in _prog_workouts:
-        table.add_row([workout[i] for i in _workout_jawns])
-
-    table.align = 'l'
-    return print(table)
+    return prog_workouts
