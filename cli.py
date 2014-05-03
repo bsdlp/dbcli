@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 
+"""Dailyburn Test CLI.
+
+Usage:
+    cli.py list
+    cli.py list programs
+    cli.py list workouts [--programid=<id> | --programtitle=<title>]
+    cli.py list trainer (workouts|programs)
+    cli.py search (workouts|programs) <keyword>
+
+Options:
+    -h --help               Show this help message.
+    --programid=<id>        Restrict to program id.
+    --programtitle=<title>  Restrict to program title.
+"""
+
+from docopt import docopt
 from prettytable import PrettyTable
 from api import LeClient
 from re import search, IGNORECASE
@@ -120,3 +136,7 @@ def search_workouts(keyword):
 @tabulate(_program_jawns)
 def search_programs(keyword):
     return _search(keyword, search_type='programs')
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__)
+    print(arguments)
