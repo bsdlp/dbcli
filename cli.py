@@ -38,3 +38,21 @@ def list_program_workouts(program_id=None, program_title=None):
     _prog_workouts = filter(
         lambda x: _program['id'] in x['program_ids'], _workouts)
     return prog_workouts
+
+def list_trainer(programs=None, workouts=None, trainer_name):
+    """
+    :rtype:filter either programs or workouts by specified trainer_name,
+    depending on whether kwarg programs or workouts is True.
+    """
+    _workouts = api.request(path='workouts')
+    _trainer_workouts = filter(
+        lambda x: x['trainer_name'] == trainer_name, _workouts)
+
+    if workouts:
+        return _trainer_workouts
+
+    _program_ids = { i for x in _trainer_workouts for i in x['program_ids']}
+    _programs = api.request(path='programs')
+    _trainer_programs = filter(
+        lambda x: x['id'] in _program_ids, _programs)
+    return _trainer_programs
