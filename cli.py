@@ -12,35 +12,7 @@ _workout_jawns = ['title', 'trainer_name', 'workout_description',
 _program_jawns = ['id', 'title', 'image_url']
 
 
-def list_all(thing_type):
-    """
-    :rtype:generator all workouts or programs.
-    """
-    if thing_type == 'programs':
-        _jawns = _program_jawns
-    elif thing_type == 'workouts':
-        _jawns = _workout_jawns
-    for item in api.request(path=thing_type):
-        yield item
-
-def list_program_workouts(program_id=None, program_title=None):
-    """
-    :rtype:filter workouts in program.
-    """
-    _programs = api.request(path='programs')
-    try:
-        _program = next(filter(
-            lambda x: x['id'] == program_id or x['title'] == program_title,
-            _programs))
-    except:
-        return None
-
-    _workouts = api.request(path='workouts')
-    _prog_workouts = filter(
-        lambda x: _program['id'] in x['program_ids'], _workouts)
-    return _prog_workouts
-
-def list_trainer(trainer_name, programs=None, workouts=None):
+def _list_trainer(trainer_name, programs=None, workouts=None):
     """
     :rtype:filter either programs or workouts by specified trainer_name,
     depending on whether kwarg programs or workouts is True.
@@ -58,7 +30,7 @@ def list_trainer(trainer_name, programs=None, workouts=None):
         lambda x: x['id'] in _program_ids, _programs)
     return _trainer_programs
 
-def search_workouts(keyword, search_type=None):
+def _search(keyword, search_type=None):
     """
     :rtype:filter workouts based on case-insensitive search for <keyword> in
     workouts or programs depending on search_type input.
@@ -74,5 +46,66 @@ def search_workouts(keyword, search_type=None):
     elif 'workouts' in search_type:
         _workouts = api.request(path='workouts')
         _search_workouts = filter(
-            lambda x: search(keyword, ''.join(map(str, x.values())), IGNORECASE), _programs)
+            lambda x: search(keyword, ''.join(map(str, x.values())), IGNORECASE), _workouts)
         return _search_workouts
+
+def tabulate(jawn_type):
+    def wrapper(func):
+        def _wrapper(*args, **kwargs):
+            table = PrettyTable(jawn_type)
+            for x in func(*args, **kwargs):
+                table.add_row(x.values())
+            table.align = 'l'
+            print(table)
+        return _wrapper
+    return wrapper
+
+@tabulate(_workout_jawns)
+def list_workouts():
+    """
+    :rtype:generator all workouts.
+    """
+    for item in api.request(path='workouts'):
+        yield item
+
+@tabulate(_program_jawns)
+def list_programs():
+    """
+    :rtype:generator all programs.
+    """
+    for item in api.request(path='programs'):
+        yield item
+
+@tabulate(_workout_jawns)
+def list_program_workouts(program_id=None, program_title=None):
+    """
+    :rtype:filter workouts in program.
+    """
+    _programs = api.request(path='programs')
+    try:
+        _program = next(filter(
+            lambda x: x['id'] == program_id or x['title'] == program_title,
+            _programs))
+    except:
+        return None
+
+    _workouts = api.request(path='workouts')
+    _prog_workouts = filter(
+        lambda x: _program['id'] in x['program_ids'], _workouts)
+    return _prog_workouts
+
+@tabulate(_workout_jawns)
+def list_trainer_workouts(trainer_name):
+    return _list_trainer(trainer_name, workouts=True)
+
+@tabulate(_program_jawns)
+def list_trainer_programs(trainer_name):
+    return _list_trainer(trainer_name, programs=True)
+
+@tabulate(_workout_jawns)
+def search_workouts(keyword):
+    return _search(keyword, search_type='workouts')
+
+@tabulate(_program_jawns)
+def search_programs(keyword):
+    return _search(keyword, search_type='programs')
