@@ -58,7 +58,7 @@ def tabulate(jawn_type):
         def _wrapper(*args, **kwargs):
             table = PrettyTable(jawn_type)
             for x in func(*args, **kwargs):
-                table.add_row(x.values())
+                table.add_row([y for i in jawn_type for y in x[i]])
             table.align = 'l'
             print(table)
         return _wrapper
