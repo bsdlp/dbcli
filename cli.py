@@ -2,6 +2,7 @@
 
 from prettytable import PrettyTable
 from api import LeClient
+from re import search, IGNORECASE
 
 
 api = LeClient()
@@ -56,3 +57,13 @@ def list_trainer(programs=None, workouts=None, trainer_name):
     _trainer_programs = filter(
         lambda x: x['id'] in _program_ids, _programs)
     return _trainer_programs
+
+def search_programs(keyword):
+    """
+    :rtype:filter programs based on case-insensitive search for <keyword> in
+    program title.
+    """
+    _programs = api.request(path='programs')
+    _search_programs = filter(
+        lambda x: search(keyword, x['title'], IGNORECASE), _programs)
+    return _search_programs
