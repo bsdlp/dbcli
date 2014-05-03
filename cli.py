@@ -31,3 +31,14 @@ def list_program_workouts(program_id=None, program_title=None):
             _programs))
     except:
         return None
+
+    _workouts = api.request(path='workouts')
+    _prog_workouts = filter(
+        lambda x: _program['id'] in x['program_ids'], _workouts)
+
+    table = PrettyTable(_workout_jawns)
+    for workout in _prog_workouts:
+        table.add_row([workout[i] for i in _workout_jawns])
+
+    table.align = 'l'
+    return print(table)
