@@ -37,7 +37,7 @@ def list_program_workouts(program_id=None, program_title=None):
     _workouts = api.request(path='workouts')
     _prog_workouts = filter(
         lambda x: _program['id'] in x['program_ids'], _workouts)
-    return prog_workouts
+    return _prog_workouts
 
 def list_trainer(programs=None, workouts=None, trainer_name):
     """
