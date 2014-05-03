@@ -8,7 +8,7 @@ from models import Workout, Program, AWorkout, AProgram, Trainer
 api = LeClient()
 
 
-def list(thing_type):
+def list_all(thing_type):
     if thing_type == 'program':
         _jawns = Program().__dict__.keys()
         _path = 'programs'
