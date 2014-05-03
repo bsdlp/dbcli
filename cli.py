@@ -147,7 +147,7 @@ if __name__ == '__main__':
             list_programs()
         elif arguments['workouts']:
             if arguments['--programid']:
-                list_program_workouts(program_id=arguments['--programid'])
+                list_program_workouts(program_id=int(arguments['--programid']))
             elif arguments['--programtitle']:
                 list_program_workouts(program_title=arguments['--programtitle'])
             else:
