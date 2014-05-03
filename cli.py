@@ -40,7 +40,7 @@ def list_program_workouts(program_id=None, program_title=None):
         lambda x: _program['id'] in x['program_ids'], _workouts)
     return _prog_workouts
 
-def list_trainer(programs=None, workouts=None, trainer_name):
+def list_trainer(trainer_name, programs=None, workouts=None):
     """
     :rtype:filter either programs or workouts by specified trainer_name,
     depending on whether kwarg programs or workouts is True.
