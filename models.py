@@ -30,7 +30,7 @@ class AProgram(Program):
         payload = {'program_id': program_id}
         workouts = LeClient().request(path='workouts', params=payload)
         for workout in workouts:
-            yield Workout([workout[i] for i in Workout.keys()])
+            yield Workout([workout[i] for i in Workout.__dict__.keys()])
 
 
 class Workout(object):
