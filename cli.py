@@ -72,6 +72,9 @@ def _search(keyword, search_type=None):
 
 
 def tabulate(jawn_type):
+    """
+    Decorator function that prints a PrettyTable using the jawn_type arg for table headers.
+    """
     def wrapper(func):
         def _wrapper(*args, **kwargs):
             table = PrettyTable(jawn_type)
