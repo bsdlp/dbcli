@@ -20,7 +20,7 @@ class AProgram(Program):
                                   programs))
             return self.__class__(**program)
         except KeyError:
-            program = next(filter(lambda x: x['title'] == kwargs['title'],
+            program = next(filter(lambda x: x['title'] == kwargs['program_title'],
                                   programs))
             return self.__class__(**program)
         except:
