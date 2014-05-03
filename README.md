@@ -1,5 +1,13 @@
 # DailyBurn Test CLI
 
+## Requirements:
+
+```
+pip3 install -r requirements
+```
+
+Probably want to use a virtualenv.
+
 ## Usage:
 
 ```
