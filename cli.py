@@ -22,3 +22,12 @@ def list_all(thing_type):
 
     table.align = 'l'
     return print(table)
+
+def list_program_workouts(program_id=None, program_title=None):
+    _programs = api.request(path='programs')
+    try:
+        _program = next(filter(
+            lambda x: x['id'] == program_id or x['title'] == program_title,
+            _programs))
+    except:
+        return None
