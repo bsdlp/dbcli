@@ -2,22 +2,26 @@
 
 from prettytable import PrettyTable
 from api import LeClient
-from models import Workout, Program
+from models import Workout, Program, AWorkout, AProgram, Trainer
 
 
 api = LeClient()
 
 
-def list_things(thing_type):
-    if thing_type == 'programs':
-        _jawns = ['id', 'title', 'image_url']
-    elif thing_type == 'workouts':
-        _jawns = ['title', 'trainer_name', 'workout_description',
-                  'program_ids', 'image_url']
+def list(thing_type):
+    if thing_type == 'program':
+        _jawns = Program().__dict__.keys()
+        _path = 'programs'
+        table = PrettyTable(_jawns)
+    elif thing_type == 'workout':
+        _jawns = Workout().__dict__.keys()
+        _path = 'workouts'
+        table = PrettyTable(_jawns)
+    else:
+        raise KeyError(thing_type + ' is not a thing.')
 
-    table = PrettyTable(_jawns)
-    for program in api.request(path=thing_type):
-        table.add_row([program[i] for i in _jawns])
+    for item in api.request(path=_path):
+        table.add_row([item[i] for i in _jawns])
 
     table.align = 'l'
     return print(table)
