@@ -6,13 +6,15 @@ Usage:
     cli.py list all
     cli.py list programs
     cli.py list workouts [--programid=<id> | --programtitle=<title>]
-    cli.py list trainer (workouts|programs) <trainer_name>
-    cli.py search (workouts|programs) <keyword>
+    cli.py list trainer (--workouts|--programs) <trainer_name>
+    cli.py search [--workouts|--programs] <keyword>
 
 Options:
     -h --help               Show this help message.
     --programid=<id>        Restrict to program id.
     --programtitle=<title>  Restrict to program title.
+    --workouts              Restrict to workouts.
+    --programs              Restrict to programs.
 """
 
 from docopt import docopt
@@ -154,13 +156,16 @@ if __name__ == '__main__':
             list_programs()
             list_workouts()
         elif arguments['trainer']:
-            if arguments['workouts'] and arguments['<trainer_name>']:
+            if arguments['--workouts'] and arguments['<trainer_name>']:
                 list_trainer_workouts(arguments['<trainer_name>'])
-            elif arguments['programs'] and arguments['<trainer_name>']:
+            elif arguments['--programs'] and arguments['<trainer_name>']:
                 list_trainer_programs(arguments['<trainer_name>'])
 
     if arguments['search']:
-        if arguments['workouts'] and arguments['<keyword>']:
+        if arguments['--workouts'] and arguments['<keyword>']:
             search_workouts(arguments['<keyword>'])
-        elif arguments['programs'] and arguments['<keyword>']:
+        elif arguments['--programs'] and arguments['<keyword>']:
+            search_programs(arguments['<keyword>'])
+        elif arguments['<keyword>']:
+            search_workouts(arguments['<keyword>'])
             search_programs(arguments['<keyword>'])
