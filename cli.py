@@ -58,12 +58,21 @@ def list_trainer(programs=None, workouts=None, trainer_name):
         lambda x: x['id'] in _program_ids, _programs)
     return _trainer_programs
 
-def search_programs(keyword):
+def search_workouts(keyword, search_type=None):
     """
-    :rtype:filter programs based on case-insensitive search for <keyword> in
-    program title.
+    :rtype:filter workouts based on case-insensitive search for <keyword> in
+    workouts or programs depending on search_type input.
     """
-    _programs = api.request(path='programs')
-    _search_programs = filter(
-        lambda x: search(keyword, x['title'], IGNORECASE), _programs)
-    return _search_programs
+    if search_type == None:
+        search_type = ['programs', 'workouts']
+
+    if 'programs' in search_type:
+        _programs = api.request(path='programs')
+        _search_programs = filter(
+            lambda x: search(keyword, ''.join(map(str, x.values())), IGNORECASE), _programs)
+        return _search_programs
+    elif 'workouts' in search_type:
+        _workouts = api.request(path='workouts')
+        _search_workouts = filter(
+            lambda x: search(keyword, ''.join(map(str, x.values())), IGNORECASE), _programs)
+        return _search_workouts
