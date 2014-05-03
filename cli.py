@@ -3,10 +3,10 @@
 """Dailyburn Test CLI.
 
 Usage:
-    cli.py list
+    cli.py list all
     cli.py list programs
     cli.py list workouts [--programid=<id> | --programtitle=<title>]
-    cli.py list trainer (workouts|programs)
+    cli.py list trainer (workouts|programs) <trainer_name>
     cli.py search (workouts|programs) <keyword>
 
 Options:
@@ -139,4 +139,28 @@ def search_programs(keyword):
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
-    print(arguments)
+
+    if arguments['list']:
+        if arguments['programs']:
+            list_programs()
+        elif arguments['workouts']:
+            if arguments['--programid']:
+                list_program_workouts(program_id=arguments['--programid'])
+            elif arguments['--programtitle']:
+                list_program_workouts(program_title=arguments['--programtitle'])
+            else:
+                list_workouts()
+        elif arguments['all']:
+            list_programs()
+            list_workouts()
+        elif arguments['trainer']:
+            if arguments['workouts'] and arguments['<trainer_name>']:
+                list_trainer_workouts(arguments['<trainer_name>'])
+            elif arguments['programs'] and arguments['<trainer_name>']:
+                list_trainer_programs(arguments['<trainer_name>'])
+
+    if arguments['search']:
+        if arguments['workouts'] and arguments['<keyword>']:
+            search_workouts(arguments['<keyword>'])
+        elif arguments['programs'] and arguments['<keyword>']:
+            search_programs(arguments['<keyword>'])
