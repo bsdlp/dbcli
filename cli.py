@@ -73,7 +73,8 @@ def _search(keyword, search_type=None):
 
 def tabulate(jawn_type):
     """
-    Decorator function that prints a PrettyTable using the jawn_type arg for table headers.
+    Decorator function that prints a PrettyTable using the jawn_type arg for
+    table headers.
     """
     def wrapper(func):
         def _wrapper(*args, **kwargs):
@@ -152,7 +153,8 @@ if __name__ == '__main__':
             if arguments['--programid']:
                 list_program_workouts(program_id=int(arguments['--programid']))
             elif arguments['--programtitle']:
-                list_program_workouts(program_title=arguments['--programtitle'])
+                list_program_workouts(
+                    program_title=arguments['--programtitle'])
             else:
                 list_workouts()
         elif arguments['all']:
